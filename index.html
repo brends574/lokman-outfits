@@ -1,205 +1,158 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lokman Store</title>
+<title>LOKMAN</title>
 
 <style>
 body{
     margin:0;
     font-family:Arial;
-    background:#020617;
+    background:#00555A;
     color:white;
 }
 
-/* NAVBAR */
+/* NAV */
 nav{
     display:flex;
     justify-content:space-between;
-    padding:15px 30px;
-    background:rgba(0,0,0,0.6);
-    backdrop-filter: blur(10px);
-    position:sticky;
-    top:0;
+    padding:20px 40px;
 }
 
-.logo{font-weight:bold;font-size:20px}
+nav h1{
+    color:#C3FDB8;
+}
 
 /* HERO */
 .hero{
-    height:300px;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    background:linear-gradient(45deg,#2563eb,#06b6d4);
-    animation:gradient 5s infinite alternate;
+    text-align:center;
+    padding:60px 20px;
 }
 
-@keyframes gradient{
-    0%{filter:hue-rotate(0deg);}
-    100%{filter:hue-rotate(40deg);}
+.hero h2{
+    font-size:35px;
 }
 
 .btn{
-    background:#22c55e;
-    padding:10px 25px;
+    background:#C3FDB8;
+    color:#00555A;
+    padding:12px 25px;
     border:none;
-    border-radius:20px;
+    border-radius:30px;
     cursor:pointer;
-    margin-top:10px;
-}
-
-/* CATEGORIES */
-.categories{
-    display:flex;
-    justify-content:center;
-    gap:40px;
-    padding:30px;
-}
-
-.cat{
-    text-align:center;
-    cursor:pointer;
-}
-
-.cat img{
-    width:90px;
-    height:90px;
-    border-radius:50%;
     transition:0.3s;
 }
 
-.cat img:hover{
-    transform:scale(1.1);
+.btn:hover{
+    box-shadow:0 0 15px #C3FDB8;
 }
 
 /* PRODUCTS */
 .products{
+    background:white;
+    color:black;
+    padding:50px;
+    border-radius:40px 40px 0 0;
+}
+
+.grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
     gap:25px;
-    padding:30px;
 }
 
 .card{
-    background:rgba(255,255,255,0.05);
-    backdrop-filter: blur(10px);
-    border-radius:20px;
+    background:#f1f1f1;
     padding:15px;
+    border-radius:20px;
     text-align:center;
     transition:0.3s;
-    cursor:pointer;
-}
-
-.card:hover{
-    transform:translateY(-10px);
-    box-shadow:0 0 20px #06b6d4;
 }
 
 .card img{
     width:100%;
     border-radius:15px;
+    transition:0.3s;
 }
 
-/* POPUP */
-.popup{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.8);
-    display:none;
-    justify-content:center;
-    align-items:center;
+.card:hover{
+    transform:translateY(-10px);
 }
 
-.popup-content{
-    background:#0f172a;
-    padding:20px;
+.card:hover img{
+    transform:scale(1.05);
+}
+
+/* BUTTON BUY */
+.buy{
+    margin-top:10px;
+    background:#00555A;
+    color:white;
+    padding:10px;
+    border:none;
     border-radius:20px;
-    text-align:center;
+    cursor:pointer;
 }
 
-.close{
-    cursor:pointer;
-    color:red;
+/* WHATSAPP FLOAT */
+.whatsapp{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    background:#25D366;
+    padding:15px;
+    border-radius:50%;
+    text-decoration:none;
+    color:white;
+    font-size:20px;
 }
 </style>
 
 </head>
-
 <body>
 
 <nav>
-<div class="logo">🛒 Lokman</div>
-<div>Cart: <span id="cart">0</span></div>
+    <h1>LOKMAN</h1>
 </nav>
 
-<div class="hero">
-<h1>🔥 عروض قوية</h1>
-<button class="btn">تسوق الآن</button>
+<section class="hero">
+    <h2>Premium Quality You Can Feel</h2>
+    <p>Luxury Clothing Brand</p>
+    <button class="btn">Shop Now</button>
+</section>
+
+<section class="products">
+
+<h2 style="text-align:center;">Collection</h2>
+
+<div class="grid">
+
+<div class="card">
+<img src="https://via.placeholder.com/300">
+<h3>T-Shirt Black</h3>
+<p>$25</p>
+<button class="buy" onclick="buy('T-Shirt Black')">Buy</button>
 </div>
 
-<div class="categories">
-<div class="cat"><img src="https://i.imgur.com/8Km9tLL.png"><p>ملابس</p></div>
-<div class="cat"><img src="https://i.imgur.com/OdL0XPt.png"><p>رياضة</p></div>
-<div class="cat"><img src="https://i.imgur.com/9yG3K5R.png"><p>إلكترونيات</p></div>
-</div>
-
-<div class="products">
-
-<div class="card" onclick="openProduct('T-shirt',2500,'https://i.imgur.com/1.png')">
-<img src="https://i.imgur.com/1.png">
-<h3>T-shirt black</h3>
-<p>2500 DA</p>
-</div>
-
-<div class="card" onclick="openProduct('Hoodie',4000,'https://i.imgur.com/2.png')">
-<img src="https://i.imgur.com/2.png">
-<h3>Hoodie white</h3>
-<p>4000 DA</p>
-</div>
-
-<div class="card" onclick="openProduct('Cap',1500,'https://i.imgur.com/3.png')">
-<img src="https://i.imgur.com/3.png">
-<h3>Cap</h3>
-<p>1500 DA</p>
+<div class="card">
+<img src="https://via.placeholder.com/300">
+<h3>T-Shirt White</h3>
+<p>$30</p>
+<button class="buy" onclick="buy('T-Shirt White')">Buy</button>
 </div>
 
 </div>
 
-<!-- POPUP -->
-<div class="popup" id="popup">
-<div class="popup-content">
-<span class="close" onclick="closePopup()">X</span>
-<img id="pImg" width="200"><br>
-<h2 id="pName"></h2>
-<p id="pPrice"></p>
+</section>
 
-<button class="btn" onclick="addToCart()">شراء</button>
-</div>
-</div>
+<a class="whatsapp" href="https://wa.me/213554751016">💬</a>
 
 <script>
-let cart = 0;
-
-function openProduct(name,price,img){
-    document.getElementById("popup").style.display="flex";
-    document.getElementById("pName").innerText=name;
-    document.getElementById("pPrice").innerText=price+" DA";
-    document.getElementById("pImg").src=img;
-}
-
-function closePopup(){
-    document.getElementById("popup").style.display="none";
-}
-
-function addToCart(){
-    cart++;
-    document.getElementById("cart").innerText=cart;
+function buy(product){
+    let number = "213554751016";
+    let message = "سلام، نحب نشري " + product;
+    let url = "https://wa.me/" + number + "?text=" + encodeURIComponent(message);
+    window.open(url, '_blank');
 }
 </script>
 
