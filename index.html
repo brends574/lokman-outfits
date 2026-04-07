@@ -6,216 +6,156 @@
 <title>Lokman Store</title>
 
 <style>
-body {
+body{
     margin:0;
-    font-family:Arial;
-    background:#f5f5f5;
+    font-family: Arial;
+    background:#0f172a;
+    color:white;
 }
 
-/* HEADER */
-.header {
-    background:#111;
-    color:white;
-    padding:15px;
+/* NAVBAR */
+nav{
     display:flex;
     justify-content:space-between;
     align-items:center;
+    padding:15px 30px;
+    background:#020617;
 }
 
-.logo {
+.logo{
     font-size:20px;
     font-weight:bold;
 }
 
-.search {
-    width:50%;
-    padding:8px;
-    border-radius:10px;
+.search{
+    width:40%;
+    padding:10px;
+    border-radius:20px;
     border:none;
 }
 
-/* SLIDER */
-.slider {
-    width:100%;
-    height:200px;
-    background:url("https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da") center/cover;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    color:white;
-    font-size:25px;
-    font-weight:bold;
-}
-
-/* CATEGORIES */
-.categories {
-    display:flex;
-    justify-content:space-around;
-    padding:15px;
-    background:white;
-}
-
-.cat {
+/* HERO */
+.hero{
+    background:linear-gradient(45deg,#1e3a8a,#06b6d4);
+    padding:50px;
     text-align:center;
 }
 
-.cat img {
-    width:60px;
-    height:60px;
+.hero h1{
+    font-size:40px;
+}
+
+.btn{
+    background:#22c55e;
+    padding:10px 20px;
+    border:none;
+    border-radius:10px;
+    color:white;
+    cursor:pointer;
+}
+
+/* CATEGORIES */
+.categories{
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    padding:30px;
+}
+
+.cat{
+    text-align:center;
+}
+
+.cat img{
+    width:80px;
+    height:80px;
     border-radius:50%;
 }
 
 /* PRODUCTS */
-.products {
+.products{
     display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(150px,1fr));
-    gap:10px;
-    padding:10px;
-}
-
-.card {
-    background:white;
-    padding:10px;
-    border-radius:10px;
-    text-align:center;
-}
-
-.card img {
-    width:100%;
-    height:120px;
-    object-fit:cover;
-    border-radius:10px;
-}
-
-.price {
-    color:green;
-    font-weight:bold;
-}
-
-button {
-    background:orange;
-    border:none;
-    padding:5px 10px;
-    border-radius:5px;
-    color:white;
-}
-
-/* PRODUCT PAGE */
-#productPage {
-    display:none;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
     padding:20px;
-    background:white;
 }
 
-.back {
-    margin-bottom:10px;
-    cursor:pointer;
-    color:blue;
+.card{
+    background:#1e293b;
+    padding:15px;
+    border-radius:15px;
+    text-align:center;
+    transition:0.3s;
 }
+
+.card:hover{
+    transform:scale(1.05);
+}
+
+.card img{
+    width:100%;
+    border-radius:10px;
+}
+
 </style>
-
 </head>
+
 <body>
 
-<div id="home">
-
-<!-- HEADER -->
-<div class="header">
+<!-- NAVBAR -->
+<nav>
     <div class="logo">🛒 Lokman</div>
-    <input class="search" placeholder="ابحث على المنتجات">
-</div>
+    <input class="search" placeholder="ابحث عن منتج...">
+    <div>🛒 0</div>
+</nav>
 
-<!-- SLIDER -->
-<div class="slider">
-    عروض قوية 🔥
+<!-- HERO -->
+<div class="hero">
+    <h1>🔥 عروض قوية</h1>
+    <button class="btn">تسوق الآن</button>
 </div>
 
 <!-- CATEGORIES -->
 <div class="categories">
     <div class="cat">
-        <img src="https://cdn-icons-png.flaticon.com/512/892/892458.png">
+        <img src="https://i.imgur.com/8Km9tLL.png">
         <p>ملابس</p>
     </div>
     <div class="cat">
-        <img src="https://cdn-icons-png.flaticon.com/512/1046/1046857.png">
-        <p>إلكترونيات</p>
+        <img src="https://i.imgur.com/OdL0XPt.png">
+        <p>رياضة</p>
     </div>
     <div class="cat">
-        <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png">
-        <p>رياضة</p>
+        <img src="https://i.imgur.com/9yG3K5R.png">
+        <p>إلكترونيات</p>
     </div>
 </div>
 
 <!-- PRODUCTS -->
-<div class="products" id="products"></div>
+<div class="products">
 
+<div class="card">
+    <img src="https://i.imgur.com/1.png">
+    <h3>T-shirt black</h3>
+    <p>2500 DA</p>
+    <button class="btn">شراء</button>
 </div>
 
-<!-- PRODUCT DETAILS -->
-<div id="productPage">
-    <div class="back" onclick="goHome()">⬅ رجوع</div>
-    <img id="pImg" width="100%">
-    <h2 id="pName"></h2>
-    <p id="pPrice"></p>
-    <button>شراء</button>
+<div class="card">
+    <img src="https://i.imgur.com/2.png">
+    <h3>Hoodie white</h3>
+    <p>4000 DA</p>
+    <button class="btn">شراء</button>
 </div>
 
-<script>
+<div class="card">
+    <img src="https://i.imgur.com/3.png">
+    <h3>Cap</h3>
+    <p>1500 DA</p>
+    <button class="btn">شراء</button>
+</div>
 
-// منتجات تجريبية (حتى تربط Firebase)
-const data = [
-{
-    id:1,
-    name:"T-shirt Black",
-    price:2500,
-    image:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab"
-},
-{
-    id:2,
-    name:"Hoodie White",
-    price:4000,
-    image:"https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf"
-},
-{
-    id:3,
-    name:"Cap",
-    price:1500,
-    image:"https://images.unsplash.com/photo-1526178613658-3f1622045557"
-}
-];
-
-// عرض المنتجات
-const productsDiv = document.getElementById("products");
-
-data.forEach(p=>{
-    productsDiv.innerHTML += 
-    <div class="card" onclick="openProduct(${p.id})">
-        <img src="${p.image}">
-        <h4>${p.name}</h4>
-        <p class="price">${p.price} DA</p>
-        <button>شراء</button>
-    </div>
-    ;
-});
-
-// فتح منتج
-function openProduct(id){
-    const p = data.find(x=>x.id===id);
-    document.getElementById("home").style.display="none";
-    document.getElementById("productPage").style.display="block";
-
-    document.getElementById("pImg").src = p.image;
-    document.getElementById("pName").innerText = p.name;
-    document.getElementById("pPrice").innerText = p.price+" DA";
-}
-
-// رجوع
-function goHome(){
-    document.getElementById("home").style.display="block";
-    document.getElementById("productPage").style.display="none";
-}
-
-</script>
+</div>
 
 </body>
 </html>
