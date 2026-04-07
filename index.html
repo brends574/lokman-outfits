@@ -2,206 +2,58 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>متجر الملابس</title>
+<title>متجر ملابسي</title>
 
 <style>
-body {
-    margin: 0;
-    font-family: Arial;
-    background: #fff;
-    color: #111;
-}
+body {font-family: Arial; margin:0; background:#fff;}
+header {text-align:center; padding:15px; font-size:22px; border-bottom:1px solid #eee;}
 
-/* HEADER */
-header {
-    padding: 15px;
-    text-align: center;
-    font-size: 24px;
-    border-bottom: 1px solid #eee;
-    font-weight: bold;
-}
-
-/* PRODUCTS */
 .products {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 20px;
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+padding:20px;
 }
 
 .card {
-    border: 1px solid #eee;
-    margin: 10px;
-    padding: 10px;
-    width: 220px;
-    border-radius: 12px;
-    transition: 0.2s;
+border:1px solid #eee;
+margin:10px;
+padding:10px;
+width:200px;
+border-radius:10px;
 }
 
-.card:hover {
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-}
-
-.card img {
-    width: 100%;
-    border-radius: 10px;
-}
-
-.price {
-    color: #16a34a;
-    margin: 5px 0;
-}
-
-button {
-    background: black;
-    color: white;
-    border: none;
-    padding: 8px;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-/* CART */
-.cart {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    background: black;
-    color: white;
-    padding: 10px;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-.cart-box {
-    position: fixed;
-    right: 10px;
-    top: 60px;
-    background: white;
-    border: 1px solid #ddd;
-    padding: 15px;
-    width: 270px;
-    display: none;
-    border-radius: 10px;
-}
-
-/* FORM */
-.form {
-    padding: 20px;
-    max-width: 400px;
-    margin: auto;
-}
-
-.form input {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-}
+.card img {width:100%;}
+button {background:black;color:white;border:none;padding:8px;border-radius:6px;}
 </style>
-
 </head>
 
 <body>
 
 <header>🛍️ متجر ملابسي</header>
 
-<div class="cart" onclick="toggleCart()">
-🛒 <span id="count">0</span>
-</div>
-
-<div class="cart-box" id="cartBox">
-<h3>السلة</h3>
-<div id="items"></div>
-<p>المجموع: <span id="total">0</span> DA</p>
-
-
-<div class="form">
-<input type="text" id="name" placeholder="الاسم">
-<input type="text" id="phone" placeholder="رقم الهاتف">
-<input type="text" id="address" placeholder="العنوان">
-</div>
-
-<button onclick="checkout()">تأكيد الطلب</button>
-</div>
-
 <div class="products" id="products"></div>
 
 <script>
-
-// المنتجات (بدلهم هنا)
 let products = [
-    {name: "T-Shirt Black", price: 3500, img: "https://via.placeholder.com/200"},
-    {name: "Hoodie White", price: 6000, img: "https://via.placeholder.com/200"},
-    {name: "Cap Style", price: 2000, img: "https://via.placeholder.com/200"}
+{name:"T-Shirt", price:3500, img:"https://via.placeholder.com/200"},
+{name:"Hoodie", price:6000, img:"https://via.placeholder.com/200"}
 ];
 
-let cart = [];
+let html = "";
 
-function showProducts() {
-    let html = "";
-    products.forEach((p, i) => {
-        html += 
-        <div class="card">
-            <img src="${p.img}">
-            <h4>${p.name}</h4>
-            <div class="price">${p.price} DA</div>
-            <button onclick="addToCart(${i})">أضف للسلة</button>
-        </div>;
-    });
-    document.getElementById("products").innerHTML = html;
-}
+products.forEach(p => {
+html += 
+<div class="card">
+<img src="${p.img}">
+<h3>${p.name}</h3>
+<p>${p.price} DA</p>
+<button>شراء</button>
+</div>
+;
+});
 
-function addToCart(i) {
-    cart.push(products[i]);
-    updateCart();
-}
-
-function updateCart() {
-    document.getElementById("count").innerText = cart.length;
-
-    let items = "";
-    let total = 0;
-
-    cart.forEach(p => {
-        items += <p>${p.name} - ${p.price} DA</p>;
-        total += p.price;
-    });
-
-    document.getElementById("items").innerHTML = items;
-    document.getElementById("total").innerText = total;
-}
-
-function toggleCart() {
-    let box = document.getElementById("cartBox");
-    box.style.display = box.style.display === "block" ? "none" : "block";
-}
-
-function checkout() {
-    let name = document.getElementById("name").value;
-    let phone = document.getElementById("phone").value;
-    let address = document.getElementById("address").value;
-
-    if(cart.length === 0){
-        alert("السلة فارغة!");
-        return;
-    }
-
-    let message = "🛒 طلب جديد:%0A";
-    message += "👤 الاسم: " + name + "%0A";
-    message += "📞 الهاتف: " + phone + "%0A";
-    message += "📍 العنوان: " + address + "%0A%0A";
-
-    cart.forEach(p => {
-        message += "• " + p.name + " - " + p.price + " DA%0A";
-    });
-
-    window.open("https://wa.me/213554751016?text=" + message);
-}
-
-showProducts();
-
+document.getElementById("products").innerHTML = html;
 </script>
 
 </body>
