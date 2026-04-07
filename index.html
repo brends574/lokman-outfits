@@ -9,7 +9,6 @@ body {
     margin: 0;
     font-family: Arial;
     background: #fff;
-    color: #111;
 }
 
 /* NAV */
@@ -18,32 +17,28 @@ nav {
     justify-content: space-between;
     padding: 15px 25px;
     border-bottom: 1px solid #eee;
-    position: sticky;
-    top: 0;
-    background: white;
 }
 
-.logo {font-weight: bold; font-size: 20px;}
-.cart-btn {cursor: pointer;}
+.logo {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.cart-btn {
+    cursor: pointer;
+}
 
 /* HERO */
 .hero {
     text-align: center;
-    padding: 60px 20px;
-}
-
-.hero h1 {font-size: 32px;}
-.hero p {color: #777;}
-
-.cta {
-    margin-top: 20px;
+    padding: 50px 20px;
 }
 
 .cta button {
     padding: 12px 25px;
-    border: none;
     background: black;
     color: white;
+    border: none;
     border-radius: 10px;
     cursor: pointer;
 }
@@ -58,58 +53,45 @@ nav {
 
 .card {
     border: 1px solid #eee;
-    border-radius: 15px;
+    border-radius: 12px;
     overflow: hidden;
-    transition: 0.3s;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
 
 .card img {
     width: 100%;
-    height: 250px;
+    height: 220px;
     object-fit: cover;
 }
 
 .card-body {
-    padding: 15px;
+    padding: 10px;
 }
-
-.price {color: #16a34a;}
 
 button {
     width: 100%;
-    padding: 10px;
-    border: none;
+    padding: 8px;
     background: black;
     color: white;
-    border-radius: 10px;
-    cursor: pointer;
+    border: none;
+    border-radius: 8px;
 }
 
 /* CART */
 .cart-box {
     position: fixed;
-    right: 20px;
-    top: 70px;
-    width: 300px;
+    right: 10px;
+    top: 60px;
     background: white;
-    border: 1px solid #eee;
+    border: 1px solid #ddd;
     padding: 15px;
+    width: 250px;
     display: none;
-    border-radius: 15px;
 }
 
-/* FORM */
 input, select {
     width: 100%;
     padding: 8px;
     margin: 5px 0;
-    border: 1px solid #ddd;
-    border-radius: 8px;
 }
 </style>
 
@@ -123,18 +105,21 @@ input, select {
 </nav>
 
 <div class="hero">
-<h1>🔥 أفضل ملابس ستايل</h1>
-<p>اختار اللوك تاعك واطلب بسهولة</p>
+<h2>🔥 أفضل ملابس ستايل</h2>
+<p>اختار واطلب بسهولة</p>
 
 <div class="cta">
 <button onclick="scrollToProducts()">تسوق الآن</button>
 </div>
 </div>
 
+<!-- PRODUCTS -->
 <div class="products" id="products"></div>
 
+<!-- CART -->
 <div class="cart-box" id="cartBox">
 <h3>السلة</h3>
+
 <div id="items"></div>
 <p>المجموع: <span id="total">0</span> DA</p>
 
@@ -143,9 +128,9 @@ input, select {
 <input id="address" placeholder="العنوان">
 
 <select id="payment">
-<option value="CCP">💳 CCP</option>
-<option value="BaridiMob">📱 BaridiMob</option>
-<option value="Livraison">💵 الدفع عند الاستلام</option>
+<option value="CCP">CCP</option>
+<option value="BaridiMob">BaridiMob</option>
+<option value="Livraison">الدفع عند الاستلام</option>
 </select>
 
 <button onclick="checkout()">تأكيد الطلب</button>
@@ -153,90 +138,99 @@ input, select {
 
 <script>
 
-// المنتجات (بدلهم بصورك)
+// منتجات (تبدلهم أنت)
 let products = [
-{name:"T-Shirt Black", price:3500, img:"https://i.imgur.com/8Km9tLL.jpg"},
-{name:"Hoodie White", price:6000, img:"https://i.imgur.com/j6y9p9b.jpg"},
-{name:"Cap Style", price:2000, img:"https://i.imgur.com/UPrs1EW.jpg"}
+{name:"T-Shirt", price:3500, img:"https://i.imgur.com/8Km9tLL.jpg"},
+{name:"Hoodie", price:6000, img:"https://i.imgur.com/j6y9p9b.jpg"}
 ];
 
 let cart = [];
 
+// عرض المنتجات
 function showProducts(){
-let html="";
-products.forEach((p,i)=>{
-html+=
+let html = "";
+
+for(let i=0;i<products.length;i++){
+let p = products[i];
+
+html += 
 <div class="card">
 <img src="${p.img}">
 <div class="card-body">
 <h3>${p.name}</h3>
-<p class="price">${p.price} DA</p>
-<button onclick="add(${i})">أضف للسلة</button>
+<p>${p.price} DA</p>
+<button onclick="addToCart(${i})">أضف للسلة</button>
 </div>
-</div>;
-});
-document.getElementById("products").innerHTML=html;
+</div>
+;
 }
 
-function add(i){
+document.getElementById("products").innerHTML = html;
+}
+
+// إضافة للسلة
+function addToCart(i){
 cart.push(products[i]);
-update();
+updateCart();
 }
 
-function update(){
-document.getElementById("count").innerText=cart.length;
-let items="";
-let total=0;
+// تحديث السلة
+function updateCart(){
+document.getElementById("count").innerText = cart.length;
 
-cart.forEach(p=>{
-items+=<p>${p.name} - ${p.price} DA</p>;
-total+=p.price;
-});
+let items = "";
+let total = 0;
 
-document.getElementById("items").innerHTML=items;
-document.getElementById("total").innerText=total;
+for(let i=0;i<cart.length;i++){
+items += "<p>"+cart[i].name+" - "+cart[i].price+" DA</p>";
+total += cart[i].price;
 }
 
+document.getElementById("items").innerHTML = items;
+document.getElementById("total").innerText = total;
+}
+
+// فتح السلة
 function toggleCart(){
-let c=document.getElementById("cartBox");
-c.style.display = c.style.display=="block"?"none":"block";
+let c = document.getElementById("cartBox");
+
+if(c.style.display === "block"){
+c.style.display = "none";
+}else{
+c.style.display = "block";
+}
 }
 
+// سكرول
 function scrollToProducts(){
 document.getElementById("products").scrollIntoView({behavior:"smooth"});
 }
 
+// الطلب
 function checkout(){
-
-let name=document.getElementById("name").value;
-let phone=document.getElementById("phone").value;
-let address=document.getElementById("address").value;
-let payment=document.getElementById("payment").value;
 
 if(cart.length === 0){
 alert("السلة فارغة");
 return;
-}let msg="🛒 طلب جديد:%0A";
-msg+="👤 الاسم: "+name+"%0A";
-msg+="📞 الهاتف: "+phone+"%0A";
-msg+="📍 العنوان: "+address+"%0A";
-msg+="💳 الدفع: "+payment+"%0A%0A";
-
-cart.forEach(p=>{
-msg+=p.name+" - "+p.price+" DA%0A";
-});
-
-if(payment==="CCP"){
-msg+="%0A📌 CCP: 123456789";
 }
 
-if(payment==="BaridiMob"){
-msg+="%0A📌 BaridiMob: 0550000000";
+let name = document.getElementById("name").value;
+let phone = document.getElementById("phone").value;
+let address = document.getElementById("address").value;
+let payment = document.getElementById("payment").value;
+
+let msg = "طلب جديد:%0A";
+msg += "الاسم: "+name+"%0A";
+msg += "الهاتف: "+phone+"%0A";
+msg += "العنوان: "+address+"%0A";
+msg += "الدفع: "+payment+"%0A%0A";
+
+for(let i=0;i<cart.length;i++){
+msg += cart[i].name+" - "+cart[i].price+" DA%0A";
+}window.open("https://wa.me/213XXXXXXXXX?text="+msg);
 }
 
-window.open("https://wa.me/213XXXXXXXXX?text="+msg);
-}
-
+// أهم سطر (لازم يكون)
 showProducts();
 
 </script>
