@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>متجر ملابسي</title>
+
+<style>
+body {font-family: Arial; margin:0; background:#fff;}
+header {text-align:center; padding:15px; font-size:22px; border-bottom:1px solid #eee;}
+
+.products {
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+padding:20px;
+}
+
+.card {
+border:1px solid #eee;
+margin:10px;
+padding:10px;
+width:200px;
+border-radius:10px;
+}
+
+.card img {width:100%;}
+button {background:black;color:white;border:none;padding:8px;border-radius:6px;}
+</style>
+</head>
+
+<body>
+
+<header>🛍️ متجر ملابسي</header>
+
+<div class="products" id="products"></div>
+
+<script>
+let products = [
+{name:"T-Shirt", price:3500, img:"https://via.placeholder.com/200"},
+{name:"Hoodie", price:6000, img:"https://via.placeholder.com/200"}
+];
+
+let html = "";
+
+products.forEach(p => {
+html += 
+<div class="card">
+<img src="${p.img}">
+<h3>${p.name}</h3>
+<p>${p.price} DA</p>
+<button>شراء</button>
+</div>
+;
+});
+
+document.getElementById("products").innerHTML = html;
+</script>
+
+</body>
+</html>
