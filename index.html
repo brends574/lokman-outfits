@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>LOKMAN</title>
+<title>LOKMAN STORE</title>
 
 <style>
 body{
@@ -16,85 +16,65 @@ body{
 nav{
     display:flex;
     justify-content:space-between;
-    padding:20px 40px;
-}
-
-nav h1{
-    color:#C3FDB8;
-}
-
-/* HERO */
-.hero{
-    text-align:center;
-    padding:60px 20px;
-}
-
-.hero h2{
-    font-size:35px;
-}
-
-.btn{
-    background:#C3FDB8;
-    color:#00555A;
-    padding:12px 25px;
-    border:none;
-    border-radius:30px;
-    cursor:pointer;
-    transition:0.3s;
-}
-
-.btn:hover{
-    box-shadow:0 0 15px #C3FDB8;
+    padding:15px;
 }
 
 /* PRODUCTS */
 .products{
     background:white;
     color:black;
-    padding:50px;
-    border-radius:40px 40px 0 0;
+    padding:20px;
+    border-radius:30px 30px 0 0;
 }
 
 .grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:25px;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
 }
 
 .card{
     background:#f1f1f1;
-    padding:15px;
-    border-radius:20px;
-    text-align:center;
-    transition:0.3s;
-}
-
-.card img{
-    width:100%;
+    padding:10px;
     border-radius:15px;
-    transition:0.3s;
+    text-align:center;
 }
 
-.card:hover{
-    transform:translateY(-10px);
-}
-
-.card:hover img{
-    transform:scale(1.05);
-}
-
-/* BUTTON BUY */
-.buy{
-    margin-top:10px;
-    background:#00555A;
+/* POPUP */
+.popup{
+    position:fixed;
+    bottom:80px;
+    left:20px;
+    background:black;
     color:white;
     padding:10px;
-    border:none;
-    border-radius:20px;
-    cursor:pointer;
+    border-radius:10px;
+    display:none;
 }
 
-/* WHATSAPP FLOAT */
+/* CART */
+.cart{
+    position:fixed;
+    top:10px;
+    right:10px;
+    background:white;
+    color:black;
+    padding:10px;
+    border-radius:10px;
+    width:220px;
+}
+
+/* CHECKOUT */
+.checkout{
+    position:fixed;
+    bottom:0;
+    width:100%;
+    background:white;
+    color:black;
+    padding:10px;
+    display:none;
+}
+
 .whatsapp{
     position:fixed;
     bottom:20px;
@@ -102,9 +82,8 @@ nav h1{
     background:#25D366;
     padding:15px;
     border-radius:50%;
-    text-decoration:none;
     color:white;
-    font-size:20px;
+    text-decoration:none;
 }
 </style>
 
@@ -112,48 +91,140 @@ nav h1{
 <body>
 
 <nav>
-    <h1>LOKMAN</h1>
+<h2>LOKMAN 🔥</h2>
+<p id="countdown"></p>
 </nav>
 
-<section class="hero">
-    <h2>Premium Quality You Can Feel</h2>
-    <p>Luxury Clothing Brand</p>
-    <button class="btn">Shop Now</button>
-</section>
+<div class="products">
 
-<section class="products">
-
-<h2 style="text-align:center;">Collection</h2>
+<h3>🔥 منتجات مميزة</h3>
 
 <div class="grid">
 
 <div class="card">
-<img src="https://via.placeholder.com/300">
-<h3>T-Shirt Black</h3>
-<p>$25</p>
-<button class="buy" onclick="buy('T-Shirt Black')">Buy</button>
+<img src="https://via.placeholder.com/200">
+<h4>Luxury Black</h4>
+<p><del>3000</del> 2500 DA</p>
+<button onclick="addToCart('Luxury Black',2500)">🛒</button>
 </div>
 
 <div class="card">
-<img src="https://via.placeholder.com/300">
-<h3>T-Shirt White</h3>
-<p>$30</p>
-<button class="buy" onclick="buy('T-Shirt White')">Buy</button>
+<img src="https://via.placeholder.com/200">
+<h4>Street White</h4>
+<p><del>3500</del> 3000 DA</p>
+<button onclick="addToCart('Street White',3000)">🛒</button>
 </div>
 
 </div>
 
-</section>
+<h3>💡 ربما يعجبك</h3>
+
+<div class="grid">
+
+<div class="card">
+<img src="https://via.placeholder.com/200">
+<h4>Summer Fit</h4>
+<p>2700 DA</p>
+<button onclick="addToCart('Summer Fit',2700)">🛒</button>
+</div>
+
+</div>
+
+</div>
+
+<!-- POPUP -->
+<div class="popup" id="popup"></div>
+
+<!-- CART -->
+<div class="cart">
+<h4>🛒 السلة</h4>
+<div id="cartItems"></div>
+<p id="total">0 DA</p>
+<button onclick="openCheckout()">طلب</button>
+</div>
+
+<!-- CHECKOUT -->
+<div class="checkout" id="checkout">
+<input id="name" placeholder="اسمك"><br>
+<input id="phone" placeholder="رقمك"><br>
+<input id="address" placeholder="العنوان"><br>
+<button onclick="sendOrder()">تأكيد</button>
+</div>
 
 <a class="whatsapp" href="https://wa.me/213554751016">💬</a>
 
 <script>
-function buy(product){
-    let number = "213554751016";
-    let message = "سلام، نحب نشري " + product;
-    let url = "https://wa.me/" + number + "?text=" + encodeURIComponent(message);
-    window.open(url, '_blank');
+let cart=JSON.parse(localStorage.getItem("cart"))||{};
+
+function saveCart(){
+localStorage.setItem("cart",JSON.stringify(cart));
 }
+
+function addToCart(name,price){
+if(cart[name]) cart[name].qty++;
+else cart[name]={price:price,qty:1};
+updateCart();
+saveCart();
+}
+
+function updateCart(){
+let html="";
+let total=0;
+
+for(let item in cart){
+html+=item+" x"+cart[item].qty+"<br>";
+total+=cart[item].price*cart[item].qty;
+}
+
+document.getElementById("cartItems").innerHTML=html;
+document.getElementById("total").innerText=total+" DA";
+}
+
+function openCheckout(){
+document.getElementById("checkout").style.display="block";
+}
+
+function sendOrder(){
+let name=document.getElementById("name").value;
+let phone=document.getElementById("phone").value;
+let address=document.getElementById("address").value;
+
+let msg="طلب:%0A"+name+"%0A"+phone+"%0A"+address+"%0A";
+
+let total=0;
+for(let item in cart){
+msg+=item+" x"+cart[item].qty+"%0A";
+total+=cart[item].price*cart[item].qty;
+}
+
+msg+="المجموع: "+total+" DA";
+
+window.open("https://wa.me/213554751016?text="+msg);
+}
+
+/* POPUP FAKE SALES */
+setInterval(()=>{
+let names=["محمد","أحمد","يوسف","سارة"];
+let products=["T-Shirt","Hoodie","Cap"];
+
+let text=names[Math.floor(Math.random()*names.length)]
++" اشترى "+products[Math.floor(Math.random()*products.length)];
+
+let popup=document.getElementById("popup");
+popup.innerText=text;
+popup.style.display="block";
+
+setTimeout(()=>popup.style.display="none",3000);
+},5000);/* COUNTDOWN */
+let time=3600;
+setInterval(()=>{
+let min=Math.floor(time/60);
+let sec=time%60;
+document.getElementById("countdown").innerText="⏳ "+min+":"+sec;
+time--;
+},1000);
+
+updateCart();
 </script>
 
 </body>
