@@ -16,45 +16,53 @@ padding:20px;
 }
 
 .card {
-border:1px solid #eee;
+border:1px solid #ddd;
 margin:10px;
 padding:10px;
 width:200px;
 border-radius:10px;
+text-align:center;
 }
 
-.card img {width:100%;}
-button {background:black;color:white;border:none;padding:8px;border-radius:6px;}
+.card img {
+width:100%;
+height:150px;
+object-fit:cover;
+}
+
+button {
+background:black;
+color:white;
+border:none;
+padding:8px;
+border-radius:6px;
+cursor:pointer;
+}
 </style>
+
 </head>
 
 <body>
 
 <header>🛍️ متجر ملابسي</header>
 
-<div class="products" id="products"></div>
+<div class="products">
 
-<script>
-let products = [
-{name:"T-Shirt", price:3500, img:"https://via.placeholder.com/200"},
-{name:"Hoodie", price:6000, img:"https://via.placeholder.com/200"}
-];
-
-let html = "";
-
-products.forEach(p => {
-html += 
 <div class="card">
-<img src="${p.img}">
-<h3>${p.name}</h3>
-<p>${p.price} DA</p>
+<img src="https://via.placeholder.com/200">
+<h3>T-Shirt</h3>
+<p>3500 DA</p>
 <button>شراء</button>
 </div>
-;
-});
 
-document.getElementById("products").innerHTML = html;
-</script>
+<div class="card">
+<img src="https://via.placeholder.com/200">
+<h3>Hoodie</h3>
+<p>6000 DA</p>
+<button>شراء</button>
+</div>
+
+</div>
 
 </body>
 </html>
