@@ -8,8 +8,8 @@
 <style>
 body{
     margin:0;
-    font-family: Arial;
-    background:#0f172a;
+    font-family:Arial;
+    background:#020617;
     color:white;
 }
 
@@ -17,145 +17,191 @@ body{
 nav{
     display:flex;
     justify-content:space-between;
-    align-items:center;
     padding:15px 30px;
-    background:#020617;
+    background:rgba(0,0,0,0.6);
+    backdrop-filter: blur(10px);
+    position:sticky;
+    top:0;
 }
 
-.logo{
-    font-size:20px;
-    font-weight:bold;
-}
-
-.search{
-    width:40%;
-    padding:10px;
-    border-radius:20px;
-    border:none;
-}
+.logo{font-weight:bold;font-size:20px}
 
 /* HERO */
 .hero{
-    background:linear-gradient(45deg,#1e3a8a,#06b6d4);
-    padding:50px;
-    text-align:center;
+    height:300px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(45deg,#2563eb,#06b6d4);
+    animation:gradient 5s infinite alternate;
 }
 
-.hero h1{
-    font-size:40px;
+@keyframes gradient{
+    0%{filter:hue-rotate(0deg);}
+    100%{filter:hue-rotate(40deg);}
 }
 
 .btn{
     background:#22c55e;
-    padding:10px 20px;
+    padding:10px 25px;
     border:none;
-    border-radius:10px;
-    color:white;
+    border-radius:20px;
     cursor:pointer;
+    margin-top:10px;
 }
 
 /* CATEGORIES */
 .categories{
     display:flex;
     justify-content:center;
-    gap:30px;
+    gap:40px;
     padding:30px;
 }
 
 .cat{
     text-align:center;
+    cursor:pointer;
 }
 
 .cat img{
-    width:80px;
-    height:80px;
+    width:90px;
+    height:90px;
     border-radius:50%;
+    transition:0.3s;
+}
+
+.cat img:hover{
+    transform:scale(1.1);
 }
 
 /* PRODUCTS */
 .products{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:20px;
-    padding:20px;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+    padding:30px;
 }
 
 .card{
-    background:#1e293b;
+    background:rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    border-radius:20px;
     padding:15px;
-    border-radius:15px;
     text-align:center;
     transition:0.3s;
+    cursor:pointer;
 }
 
 .card:hover{
-    transform:scale(1.05);
+    transform:translateY(-10px);
+    box-shadow:0 0 20px #06b6d4;
 }
 
 .card img{
     width:100%;
-    border-radius:10px;
+    border-radius:15px;
 }
 
+/* POPUP */
+.popup{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.8);
+    display:none;
+    justify-content:center;
+    align-items:center;
+}
+
+.popup-content{
+    background:#0f172a;
+    padding:20px;
+    border-radius:20px;
+    text-align:center;
+}
+
+.close{
+    cursor:pointer;
+    color:red;
+}
 </style>
+
 </head>
 
 <body>
 
-<!-- NAVBAR -->
 <nav>
-    <div class="logo">🛒 Lokman</div>
-    <input class="search" placeholder="ابحث عن منتج...">
-    <div>🛒 0</div>
+<div class="logo">🛒 Lokman</div>
+<div>Cart: <span id="cart">0</span></div>
 </nav>
 
-<!-- HERO -->
 <div class="hero">
-    <h1>🔥 عروض قوية</h1>
-    <button class="btn">تسوق الآن</button>
+<h1>🔥 عروض قوية</h1>
+<button class="btn">تسوق الآن</button>
 </div>
 
-<!-- CATEGORIES -->
 <div class="categories">
-    <div class="cat">
-        <img src="https://i.imgur.com/8Km9tLL.png">
-        <p>ملابس</p>
-    </div>
-    <div class="cat">
-        <img src="https://i.imgur.com/OdL0XPt.png">
-        <p>رياضة</p>
-    </div>
-    <div class="cat">
-        <img src="https://i.imgur.com/9yG3K5R.png">
-        <p>إلكترونيات</p>
-    </div>
+<div class="cat"><img src="https://i.imgur.com/8Km9tLL.png"><p>ملابس</p></div>
+<div class="cat"><img src="https://i.imgur.com/OdL0XPt.png"><p>رياضة</p></div>
+<div class="cat"><img src="https://i.imgur.com/9yG3K5R.png"><p>إلكترونيات</p></div>
 </div>
 
-<!-- PRODUCTS -->
 <div class="products">
 
-<div class="card">
-    <img src="https://i.imgur.com/1.png">
-    <h3>T-shirt black</h3>
-    <p>2500 DA</p>
-    <button class="btn">شراء</button>
+<div class="card" onclick="openProduct('T-shirt',2500,'https://i.imgur.com/1.png')">
+<img src="https://i.imgur.com/1.png">
+<h3>T-shirt black</h3>
+<p>2500 DA</p>
 </div>
 
-<div class="card">
-    <img src="https://i.imgur.com/2.png">
-    <h3>Hoodie white</h3>
-    <p>4000 DA</p>
-    <button class="btn">شراء</button>
+<div class="card" onclick="openProduct('Hoodie',4000,'https://i.imgur.com/2.png')">
+<img src="https://i.imgur.com/2.png">
+<h3>Hoodie white</h3>
+<p>4000 DA</p>
 </div>
 
-<div class="card">
-    <img src="https://i.imgur.com/3.png">
-    <h3>Cap</h3>
-    <p>1500 DA</p>
-    <button class="btn">شراء</button>
+<div class="card" onclick="openProduct('Cap',1500,'https://i.imgur.com/3.png')">
+<img src="https://i.imgur.com/3.png">
+<h3>Cap</h3>
+<p>1500 DA</p>
 </div>
 
 </div>
+
+<!-- POPUP -->
+<div class="popup" id="popup">
+<div class="popup-content">
+<span class="close" onclick="closePopup()">X</span>
+<img id="pImg" width="200"><br>
+<h2 id="pName"></h2>
+<p id="pPrice"></p>
+
+<button class="btn" onclick="addToCart()">شراء</button>
+</div>
+</div>
+
+<script>
+let cart = 0;
+
+function openProduct(name,price,img){
+    document.getElementById("popup").style.display="flex";
+    document.getElementById("pName").innerText=name;
+    document.getElementById("pPrice").innerText=price+" DA";
+    document.getElementById("pImg").src=img;
+}
+
+function closePopup(){
+    document.getElementById("popup").style.display="none";
+}
+
+function addToCart(){
+    cart++;
+    document.getElementById("cart").innerText=cart;
+}
+</script>
 
 </body>
 </html>
