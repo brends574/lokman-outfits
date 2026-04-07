@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>متجر الملابس</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #ffffff;
+    color: #111;
+}
+
+header {
+    padding: 15px;
+    text-align: center;
+    font-size: 22px;
+    border-bottom: 1px solid #ddd;
+    font-weight: bold;
+}
+
+.products {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+}
+
+.card {
+    border: 1px solid #eee;
+    margin: 10px;
+    padding: 10px;
+    width: 200px;
+    border-radius: 10px;
+    transition: 0.2s;
+}
+
+.card:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.card img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.price {
+    color: #16a34a;
+    margin: 5px 0;
+}
+
+button {
+    background: black;
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.cart {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: black;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.cart-box {
+    position: fixed;
+    right: 10px;
+    top: 60px;
+    background: white;
+    border: 1px solid #ddd;
+    padding: 15px;
+    width: 250px;
+    display: none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>🛍️ متجر ملابسي</header>
+
+<div class="cart" onclick="toggleCart()">
+🛒 <span id="count">0</span>
+</div>
+
+<div class="cart-box" id="cartBox">
+<h3>السلة</h3>
+<div id="items"></div>
+<p>المجموع: <span id="total">0</span> DA</p>
+<button onclick="checkout()">شراء</button>
+</div>
+
+<div class="products" id="products"></div>
+
+<script>
+
+let products = [
+    {name: "T-Shirt", price: 3500, img: "https://via.placeholder.com/200"},
+    {name: "Hoodie", price: 6000, img: "https://via.placeholder.com/200"}
+];
+
+let cart = [];
+
+function showProducts() {
+    let html = "";
+    products.forEach((p, i) => {
+        html += 
+        <div class="card">
+            <img src="${p.img}">
+            <h4>${p.name}</h4>
+            <div class="price">${p.price} DA</div>
+            <button onclick="addToCart(${i})">أضف للسلة</button>
+        </div>;
+    });
+    document.getElementById("products").innerHTML = html;
+}
+
+function addToCart(i) {
+    cart.push(products[i]);
+    updateCart();
+}
+
+function updateCart() {
+    document.getElementById("count").innerText = cart.length;
+
+    let items = "";
+    let total = 0;
+
+    cart.forEach(p => {
+        items += <p>${p.name} - ${p.price} DA</p>;
+        total += p.price;
+    });
+
+    document.getElementById("items").innerHTML = items;
+    document.getElementById("total").innerText = total;
+}
+
+function toggleCart() {
+    let box = document.getElementById("cartBox");
+    box.style.display = box.style.display === "block" ? "none" : "block";
+}
+
+function checkout() {
+    let message = "طلب جديد:%0A";
+    cart.forEach(p => {
+        message += p.name + " - " + p.price + " DA%0A";
+    });
+
+    window.open("https://wa.me/213XXXXXXXXX?text=" + message);
+}
+
+showProducts();
+
+</script>
+
+</body>
+</html>
