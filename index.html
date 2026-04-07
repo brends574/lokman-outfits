@@ -60,7 +60,6 @@ cursor:pointer;
 
 <script>
 
-// صور مضمونة
 let products = [
 {name:"T-Shirt",price:3500,img:"https://picsum.photos/300?1"},
 {name:"Hoodie",price:6000,img:"https://picsum.photos/300?2"}
@@ -68,37 +67,31 @@ let products = [
 
 let cart=[];
 
-// عرض المنتجات
 function showProducts(){
 let html="";
-products.forEach((p,i)=>{
+for(let i=0;i<products.length;i++){
 html+=
 <div class="card">
-<img src="${p.img}">
-<h3>${p.name}</h3>
-<p>${p.price} DA</p>
+<img src="${products[i].img}">
+<h3>${products[i].name}</h3>
+<p>${products[i].price} DA</p>
 <button onclick="add(${i})">شراء</button>
 </div>
 ;
-});
+}
 document.getElementById("products").innerHTML=html;
 }
 
-// زر تسوق
 function goShop(){
-window.scrollTo({
-top:document.getElementById("products").offsetTop,
-behavior:"smooth"
-});
+document.getElementById("products").scrollIntoView();
 }
 
-// سلة
 function add(i){
 cart.push(products[i]);
 document.getElementById("count").innerText=cart.length;
 }
 
-// مهم
+// أهم حاجة
 showProducts();
 
 </script>
