@@ -7,8 +7,8 @@
 <style>
 body {
     margin: 0;
-    font-family: 'Arial';
-    background: #ffffff;
+    font-family: Arial;
+    background: #fff;
     color: #111;
 }
 
@@ -16,21 +16,15 @@ body {
 nav {
     display: flex;
     justify-content: space-between;
-    padding: 15px 30px;
+    padding: 15px 25px;
     border-bottom: 1px solid #eee;
     position: sticky;
     top: 0;
     background: white;
 }
 
-.logo {
-    font-weight: bold;
-    font-size: 20px;
-}
-
-.cart-btn {
-    cursor: pointer;
-}
+.logo {font-weight: bold; font-size: 20px;}
+.cart-btn {cursor: pointer;}
 
 /* HERO */
 .hero {
@@ -38,12 +32,20 @@ nav {
     padding: 60px 20px;
 }
 
-.hero h1 {
-    font-size: 32px;
+.hero h1 {font-size: 32px;}
+.hero p {color: #777;}
+
+.cta {
+    margin-top: 20px;
 }
 
-.hero p {
-    color: #777;
+.cta button {
+    padding: 12px 25px;
+    border: none;
+    background: black;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
 }
 
 /* PRODUCTS */
@@ -76,9 +78,7 @@ nav {
     padding: 15px;
 }
 
-.price {
-    color: #16a34a;
-}
+.price {color: #16a34a;}
 
 button {
     width: 100%;
@@ -88,7 +88,6 @@ button {
     color: white;
     border-radius: 10px;
     cursor: pointer;
-    margin-top: 10px;
 }
 
 /* CART */
@@ -105,7 +104,7 @@ button {
 }
 
 /* FORM */
-input {
+input, select {
     width: 100%;
     padding: 8px;
     margin: 5px 0;
@@ -124,8 +123,12 @@ input {
 </nav>
 
 <div class="hero">
-<h1>أفضل ملابس ستايل 🔥</h1>
+<h1>🔥 أفضل ملابس ستايل</h1>
 <p>اختار اللوك تاعك واطلب بسهولة</p>
+
+<div class="cta">
+<button onclick="scrollToProducts()">تسوق الآن</button>
+</div>
 </div>
 
 <div class="products" id="products"></div>
@@ -139,11 +142,18 @@ input {
 <input id="phone" placeholder="رقم الهاتف">
 <input id="address" placeholder="العنوان">
 
+<select id="payment">
+<option value="CCP">💳 CCP</option>
+<option value="BaridiMob">📱 BaridiMob</option>
+<option value="Livraison">💵 الدفع عند الاستلام</option>
+</select>
+
 <button onclick="checkout()">تأكيد الطلب</button>
 </div>
 
 <script>
 
+// المنتجات (بدلهم بصورك)
 let products = [
 {name:"T-Shirt Black", price:3500, img:"https://i.imgur.com/8Km9tLL.jpg"},
 {name:"Hoodie White", price:6000, img:"https://i.imgur.com/j6y9p9b.jpg"},
@@ -192,19 +202,37 @@ let c=document.getElementById("cartBox");
 c.style.display = c.style.display=="block"?"none":"block";
 }
 
+function scrollToProducts(){
+document.getElementById("products").scrollIntoView({behavior:"smooth"});
+}
+
 function checkout(){
+
 let name=document.getElementById("name").value;
 let phone=document.getElementById("phone").value;
 let address=document.getElementById("address").value;
+let payment=document.getElementById("payment").value;
 
-let msg="طلب جديد:%0A";
-msg+="الاسم: "+name+"%0A";
-msg+="الهاتف: "+phone+"%0A";
-msg+="العنوان: "+address+"%0A%0A";
+if(cart.length === 0){
+alert("السلة فارغة");
+return;
+}let msg="🛒 طلب جديد:%0A";
+msg+="👤 الاسم: "+name+"%0A";
+msg+="📞 الهاتف: "+phone+"%0A";
+msg+="📍 العنوان: "+address+"%0A";
+msg+="💳 الدفع: "+payment+"%0A%0A";
 
 cart.forEach(p=>{
 msg+=p.name+" - "+p.price+" DA%0A";
 });
+
+if(payment==="CCP"){
+msg+="%0A📌 CCP: 123456789";
+}
+
+if(payment==="BaridiMob"){
+msg+="%0A📌 BaridiMob: 0550000000";
+}
 
 window.open("https://wa.me/213XXXXXXXXX?text="+msg);
 }
