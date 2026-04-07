@@ -5,93 +5,40 @@
 <title>LUXE STORE</title>
 
 <style>
-body {
-    margin: 0;
-    font-family: Arial;
-    background: #fff;
-}
+body {margin:0;font-family:Arial;background:#fff;}
 
-/* NAV */
 nav {
-    display: flex;
-    justify-content: space-between;
-    padding: 15px 25px;
-    border-bottom: 1px solid #eee;
+display:flex;
+justify-content:space-between;
+padding:15px;
+border-bottom:1px solid #eee;
 }
 
-.logo {
-    font-weight: bold;
-    font-size: 20px;
-}
-
-.cart-btn {
-    cursor: pointer;
-}
-
-/* HERO */
-.hero {
-    text-align: center;
-    padding: 50px 20px;
-}
-
-.cta button {
-    padding: 12px 25px;
-    background: black;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-/* PRODUCTS */
 .products {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-    padding: 20px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+padding:20px;
 }
 
 .card {
-    border: 1px solid #eee;
-    border-radius: 12px;
-    overflow: hidden;
+border:1px solid #ddd;
+padding:10px;
+text-align:center;
 }
 
 .card img {
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
-}
-
-.card-body {
-    padding: 10px;
+width:100%;
+height:200px;
+object-fit:cover;
 }
 
 button {
-    width: 100%;
-    padding: 8px;
-    background: black;
-    color: white;
-    border: none;
-    border-radius: 8px;
-}
-
-/* CART */
-.cart-box {
-    position: fixed;
-    right: 10px;
-    top: 60px;
-    background: white;
-    border: 1px solid #ddd;
-    padding: 15px;
-    width: 250px;
-    display: none;
-}
-
-input, select {
-    width: 100%;
-    padding: 8px;
-    margin: 5px 0;
+background:black;
+color:white;
+padding:10px;
+border:none;
+cursor:pointer;
 }
 </style>
 
@@ -100,137 +47,58 @@ input, select {
 <body>
 
 <nav>
-<div class="logo">LUXE STORE</div>
-<div class="cart-btn" onclick="toggleCart()">🛒 (<span id="count">0</span>)</div>
+<div><b>LUXE STORE</b></div>
+<div>🛒 (<span id="count">0</span>)</div>
 </nav>
 
-<div class="hero">
-<h2>🔥 أفضل ملابس ستايل</h2>
-<p>اختار واطلب بسهولة</p>
-
-<div class="cta">
-<button onclick="scrollToProducts()">تسوق الآن</button>
-</div>
+<div style="text-align:center;padding:40px;">
+<h2>🔥 أفضل ملابس</h2>
+<button onclick="goShop()">تسوق الآن</button>
 </div>
 
-<!-- PRODUCTS -->
-<div class="products" id="products"></div>
-
-<!-- CART -->
-<div class="cart-box" id="cartBox">
-<h3>السلة</h3>
-
-<div id="items"></div>
-<p>المجموع: <span id="total">0</span> DA</p>
-
-<input id="name" placeholder="الاسم">
-<input id="phone" placeholder="رقم الهاتف">
-<input id="address" placeholder="العنوان">
-
-<select id="payment">
-<option value="CCP">CCP</option>
-<option value="BaridiMob">BaridiMob</option>
-<option value="Livraison">الدفع عند الاستلام</option>
-</select>
-
-<button onclick="checkout()">تأكيد الطلب</button>
-</div>
+<div id="products" class="products"></div>
 
 <script>
 
-// منتجات (تبدلهم أنت)
+// صور مضمونة
 let products = [
-{name:"T-Shirt", price:3500, img:"https://i.imgur.com/8Km9tLL.jpg"},
-{name:"Hoodie", price:6000, img:"https://i.imgur.com/j6y9p9b.jpg"}
+{name:"T-Shirt",price:3500,img:"https://picsum.photos/300?1"},
+{name:"Hoodie",price:6000,img:"https://picsum.photos/300?2"}
 ];
 
-let cart = [];
+let cart=[];
 
 // عرض المنتجات
 function showProducts(){
-let html = "";
-
-for(let i=0;i<products.length;i++){
-let p = products[i];
-
-html += 
+let html="";
+products.forEach((p,i)=>{
+html+=
 <div class="card">
 <img src="${p.img}">
-<div class="card-body">
 <h3>${p.name}</h3>
 <p>${p.price} DA</p>
-<button onclick="addToCart(${i})">أضف للسلة</button>
-</div>
+<button onclick="add(${i})">شراء</button>
 </div>
 ;
+});
+document.getElementById("products").innerHTML=html;
 }
 
-document.getElementById("products").innerHTML = html;
+// زر تسوق
+function goShop(){
+window.scrollTo({
+top:document.getElementById("products").offsetTop,
+behavior:"smooth"
+});
 }
 
-// إضافة للسلة
-function addToCart(i){
+// سلة
+function add(i){
 cart.push(products[i]);
-updateCart();
+document.getElementById("count").innerText=cart.length;
 }
 
-// تحديث السلة
-function updateCart(){
-document.getElementById("count").innerText = cart.length;
-
-let items = "";
-let total = 0;
-
-for(let i=0;i<cart.length;i++){
-items += "<p>"+cart[i].name+" - "+cart[i].price+" DA</p>";
-total += cart[i].price;
-}
-
-document.getElementById("items").innerHTML = items;
-document.getElementById("total").innerText = total;
-}
-
-// فتح السلة
-function toggleCart(){
-let c = document.getElementById("cartBox");
-
-if(c.style.display === "block"){
-c.style.display = "none";
-}else{
-c.style.display = "block";
-}
-}
-
-// سكرول
-function scrollToProducts(){
-document.getElementById("products").scrollIntoView({behavior:"smooth"});
-}
-
-// الطلب
-function checkout(){
-
-if(cart.length === 0){
-alert("السلة فارغة");
-return;
-}
-
-let name = document.getElementById("name").value;
-let phone = document.getElementById("phone").value;
-let address = document.getElementById("address").value;
-let payment = document.getElementById("payment").value;
-
-let msg = "طلب جديد:%0A";
-msg += "الاسم: "+name+"%0A";
-msg += "الهاتف: "+phone+"%0A";
-msg += "العنوان: "+address+"%0A";
-msg += "الدفع: "+payment+"%0A%0A";
-
-for(let i=0;i<cart.length;i++){
-msg += cart[i].name+" - "+cart[i].price+" DA%0A";
-}window.open("https://wa.me/213XXXXXXXXX?text="+msg);
-}
-
-// أهم سطر (لازم يكون)
+// مهم
 showProducts();
 
 </script>
